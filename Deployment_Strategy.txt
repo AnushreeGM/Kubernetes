@@ -1,0 +1,52 @@
+What is Kubernetes?
+Kubernetes (often abbreviated as K8s) is an open-source container orchestration platform developed by Google and now maintained by the Cloud Native Computing Foundation (CNCF).
+
+What is Kubernetes Deployment?
+A Kubernetes Deployment is a resource object in Kubernetes that manages a set of identical pods (i.e., running containers). It handles the creation, update, and scaling of pods automatically, ensuring your application runs reliably and consistently.
+
+  Think of it like this:
+  A Deployment tells Kubernetes:
+  What container image to use
+  How many copies (replicas) to run
+  What to do if a pod crashes or needs an update
+
+What is deployment strategy?
+A deployment strategy in Kubernetes defines how your application gets updated when you make changes — like a new container image or config update — without affecting availability.
+
+Type of deployment strategy 
+1. Recreate
+2. Rolling update
+3. Blue Green 
+4. Canary
+5. Progressive Delivery
+6. A/B Testing
+7. Shadow
+
+1. Recreate - All old pods are stopped, then new ones are created.
+2. Rolling Update - Pods are updated gradually, one or more at a time
+   First pods are created and then old pods are deleted
+3. Blue-Green - Two environments: Blue (old version) and Green (new version).
+   Traffic is switched from Blue → Green once Green is ready.
+4. Canary - Releases the new version to a small subset of users/pods (e.g., 10%).
+   Monitors performance/health.
+   If successful, rollout continues to more users.
+5. Progressive Delivery - Umbrella strategy (includes Canary, A/B, Blue-Green).
+   Uses tools like Argo Rollouts, Flagger, or Spinnaker to:
+   Gradually release features
+   Use traffic shifting
+   Automatically pause/roll back based on metrics
+6. A/B Testing - Two versions (A and B) are served to different groups of users.
+7. Shadow - New version gets live traffic copies, but doesn't respond to users.
+   Used for observing behavior, performance, or logging.
+
+| Strategy             | Downtime | Rollback Ease | Risk Level  | Use Case Example                      | Production     |
+| -------------------- | -------- | ------------- | ----------- | ------------------------------------- |----------------|
+| Recreate             | ❌ Yes    | ✅ Easy        | 🔴 High     | Simple apps, dev environments      |    No          |
+| Rolling Update       | ✅ No     | ✅ Medium      | 🟡 Medium   | Web apps needing zero downtime     |    Yes         |
+| Blue-Green           | ✅ No     | ✅ Very Easy   | 🟢 Low      | Critical systems with quick switch |    yes         |
+| Canary               | ✅ No     | ✅ Easy        | 🟢 Low      | Gradual rollout with monitoring    |    yes         |
+| Progressive Delivery | ✅ No     | ✅ Automated   | 🟢 Very Low | Large scale, monitored releases    |    yes         |
+| A/B Testing          | ✅ No     | ❌ Complex     | 🟡 Medium   | User research/testing              |    no          |
+| Shadow               | ✅ No     | ✅ Safe        | 🟢 Very Low | Pre-production observation         |    no          |
+
+
